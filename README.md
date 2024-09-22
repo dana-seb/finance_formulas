@@ -1,5 +1,5 @@
 # finance_formulas
-Geometric Mean
-Future Value
-Present Value
+Geometric Mean,
+Future Value,
+Present Value,
 MacDuration
