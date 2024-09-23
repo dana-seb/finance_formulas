@@ -38,24 +38,31 @@ r = .04
 pv = 0
 for i in range(len(cf)):
     pv += cf[i] / (1 + r) ** (i)
-print(round(pv, 4))
+# print(round(pv, 4))
 
 # MacaulayDuration
 
-""" cf = [3.7, 4.9, 107]
-full_price = 95
-r = .06
-frac_coupon = 0 """
+#  m is compounding periods per year
+cf = [30, 30, 30, 30, 30, 1030]
+full_price = 1000
+r = .03
+frac_coupon = 0
+m = 2
 
-def mac_dur(cf, full_price, r, frac_coupon):
+def mac_dur(cf, full_price, r, m, frac_coupon):
     macaulay_dur = []
     for i in range(len(cf)):
         n = (i+1)
-        duration = (n - frac_coupon)*(cf[i]/(1+r)**(n - frac_coupon))/full_price
+        duration = (n - frac_coupon) * (cf[i]/(1 + r) ** (n - frac_coupon)) / full_price
         macaulay_dur.append(duration)
-    return round(sum(macaulay_dur),3)
+    if m > 1:
+        macaulay_dur_annual = (sum(macaulay_dur) / m)
+        print("Annual MacDur is {}".format(round(macaulay_dur_annual, 4)))
+    else:
+        macaulay_dur_reg = (sum(macaulay_dur))
+        print("MacDur is {}".format(round(macaulay_dur_reg ,4)))
+    # return round(sum(macaulay_dur),4)
 
-
-# print(mac_dur(cf, full, r, frac_coupon))
+(mac_dur(cf, full_price, r, m, frac_coupon))
 
 print('\n')
