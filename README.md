@@ -2,4 +2,5 @@
 Geometric Mean,
 Future Value,
 Present Value,
+NPV,
 MacDuration
