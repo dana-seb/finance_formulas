@@ -1,3 +1,4 @@
+import numpy as np
 import math
 
 print('\n')
@@ -39,15 +40,71 @@ pv = 0
 for i in range(len(cf)):
     pv += cf[i] / (1 + r) ** (i)
 # print(round(pv, 4))
+"""
+#  Price (PV) of a coupon bond
+
+def bond_price(pmt, r, m, n, fv):
+    cf_pmt = []
+    num_coupon_payments = m * n
+
+    for i in range(num_coupon_payments):
+        cf_pmt.append(pmt)
+
+    last_cf = cf_pmt.pop(-1)
+    cf_pmt.append(last_cf + fv)
+    print(cf_pmt)
+
+    cf = cf_pmt
+
+    for x in cf:
+        pv = []
+        discounted_cf = x * (1 + (r / m)) ** -(m * n)
+        pv.append(discounted_cf)
+
+    print(round(sum(pv, 4)))
+
+# bond_price(3, 4, 1, 3, 100)
+
+def bond_price_ii(pmt, r, m, n, fv):
+    discounted_cf = []
+    cf = [pmt] * (m * n)
+    print(cf)
+
+    g = list(range(len(cf) + 1))
+    gee = g.pop(0)
+    print(g)
+
+    denominator = (1 + (r / m))
+    for i in cf:
+        discounted_cf = []
+        x =  i / (denominator) ** g
+        discounted_cf += x
+        # x =  i / (1 + (r / m)) ** g[i]
+    print(discounted_cf)
+    # print(sum(discounted_cf))
+
+bond_price_ii(3,.04, 1, 3, 100) """
+
+# Present value of a coupon bond; pmt and r must be entered as a value per period
+
+def pv_bond(pmt, r, n ,fv):
+
+    pv_coupon = pmt * ((1 - (1 / (1 + r) ** n)) / r)
+    pv_face = fv / (1 + r) ** n
+
+    return pv_coupon + pv_face
+
+print(pv_bond(3, .04, 3, 100))
 
 # MacaulayDuration
 
 #  m is compounding periods per year
-cf = [30, 30, 30, 30, 30, 1030]
+#  r is payment per period
+""" cf = [30, 30, 30, 30, 30, 1030]
 full_price = 1000
 r = .03
 frac_coupon = 0
-m = 2
+m = 2 """
 
 def mac_dur(cf, full_price, r, m, frac_coupon):
     macaulay_dur = []
@@ -63,6 +120,6 @@ def mac_dur(cf, full_price, r, m, frac_coupon):
         print("MacDur is {}".format(round(macaulay_dur_reg ,4)))
     # return round(sum(macaulay_dur),4)
 
-(mac_dur(cf, full_price, r, m, frac_coupon))
+# mac_dur(cf, full_price, r, m, frac_coupon)
 
 print('\n')
