@@ -87,14 +87,15 @@ bond_price_ii(3,.04, 1, 3, 100) """
 
 # Present value of a coupon bond; pmt and r must be entered as a value per period
 
-def pv_bond(pmt, r, n ,fv):
-
-    pv_coupon = pmt * ((1 - (1 / (1 + r) ** n)) / r)
-    pv_face = fv / (1 + r) ** n
+def pv_bond(pmt, r, n, m, fv):
+    pmt = pmt / m
+    r = r / 100 / m
+    pv_coupon = pmt * ((1 - (1 / (1 + r) ** (n * m))) / r)
+    pv_face = fv / ((1 + r) ** (n * m))
 
     return pv_coupon + pv_face
 
-print(pv_bond(3, .04, 3, 100))
+# print(pv_bond(3, .04, 3, 100))
 
 # MacaulayDuration
 
@@ -117,9 +118,18 @@ def mac_dur(cf, full_price, r, m, frac_coupon):
         print("Annual MacDur is {}".format(round(macaulay_dur_annual, 4)))
     else:
         macaulay_dur_reg = (sum(macaulay_dur))
-        print("MacDur is {}".format(round(macaulay_dur_reg ,4)))
+        print("MacDur is {}".format(round(macaulay_dur_reg , 4)))
     # return round(sum(macaulay_dur),4)
 
 # mac_dur(cf, full_price, r, m, frac_coupon)
+
+# Modified Duration; find pv_minus and pv_plus with the pv_bond formula above
+# To find r - add/subtract the change in yield in basis points (ex. original r=4% change in ytm=50bps, enter 4.5 as r in pv_bond)
+def mod_duration(pv_0, pv_minus, pv_plus, basis_points):
+    bp = basis_points / 100
+    mod_dur =  (pv_minus - pv_plus)  / (2 * bp * pv_0)
+    return mod_dur
+
+print(mod_duration(100, 101.831, 98.207, .50))
 
 print('\n')
